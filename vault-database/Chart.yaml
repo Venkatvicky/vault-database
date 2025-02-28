@@ -1,0 +1,4 @@
+apiVersion: v2
+name: vault-postgres-chart
+description: A Helm chart for Vault with PostgreSQL as storage backend
+version: 0.1.0

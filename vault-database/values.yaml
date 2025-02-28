@@ -1,0 +1,11 @@
+postgresql:
+  image: postgres:15
+  username: vault
+  password: vaultpassword
+  database: vault
+  storageSize: 1Gi
+
+vault:
+  image: hashicorp/vault:1.15
+  storage:
+    databaseUrl: postgresql://vault:vaultpassword@postgres-service:5432/vault
