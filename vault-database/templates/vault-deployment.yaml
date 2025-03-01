@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vault
+  namespace: vault
   labels:
     app: vault
 spec:
@@ -15,27 +16,27 @@ spec:
         app: vault
     spec:
       containers:
-      - name: vault
-        image: "{{ .Values.vault.image }}"
-        args:
-          - "server"  # Ensures Vault runs in server mode
-        ports:
-        - containerPort: 8200
-        volumeMounts:
-        - name: vault-config
-          mountPath: /vault/config
-        - name: vault-storage
-          mountPath: /vault/data  # Corrected mount path
-        env:
-        - name: VAULT_LOCAL_CONFIG
-          valueFrom:
-            configMapKeyRef:
-              name: vault-config
-              key: config.json
+        - name: vault
+          image: "{{ .Values.vault.image }}"
+          args:
+            - "server"  # ✅ Ensures Vault runs in server mode
+          ports:
+            - containerPort: 8200
+          volumeMounts:
+            - name: vault-config
+              mountPath: /vault/config
+            - name: vault-storage
+              mountPath: /vault/data
+          env:
+            - name: VAULT_LOCAL_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: vault-config
+                  key: config.json
       volumes:
-      - name: vault-config
-        configMap:
-          name: vault-config
-      - name: vault-storage
-        persistentVolumeClaim:
-          claimName: vault-pvc  # Corrected PVC claim
+        - name: vault-config
+          configMap:
+            name: vault-config
+        - name: vault-storage
+          persistentVolumeClaim:
+            claimName: vault-pvc
