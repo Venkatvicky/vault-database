@@ -8,3 +8,6 @@ spec:
   resources:
     requests:
       storage: "{{ .Values.postgresql.storageSize }}"
+  {{- if .Values.postgresql.storageClass }}
+  storageClassName: "{{ .Values.postgresql.storageClass }}"
+  {{- end }}
