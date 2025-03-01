@@ -4,9 +4,9 @@ metadata:
   name: vault-pv
 spec:
   capacity:
-    storage: 1Gi  # Adjust as needed
+    storage: "{{ .Values.vault.storageSize }}"
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /mnt/vault-data  # Adjust path based on your environment
+    path: /mnt/vault-data  # Adjust as needed
