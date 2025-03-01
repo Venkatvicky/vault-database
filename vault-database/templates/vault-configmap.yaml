@@ -8,7 +8,7 @@ data:
     {
       "storage": {
         "postgresql": {
-          "connection_url": "{{ .Values.vault.storage.databaseUrl }}"
+          "connection_url": "postgresql://vault:vaultpassword@postgres-service:5432/vault"
         }
       },
       "listener": {
