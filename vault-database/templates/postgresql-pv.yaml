@@ -4,8 +4,9 @@ metadata:
   name: postgres-pv
 spec:
   capacity:
-    storage: {{ .Values.postgresql.storageSize }}
+    storage: "{{ .Values.postgresql.storageSize }}"
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /mnt/data
+    path: /mnt/postgres-data  # Adjust as needed
