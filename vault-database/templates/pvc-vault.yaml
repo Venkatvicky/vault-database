@@ -7,4 +7,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "{{ .Values.vault.storageSize }}"
+      storage: 1Gi  # Restored missing storage size
+  volumeMode: Filesystem
+  volumeName: vault-pv
