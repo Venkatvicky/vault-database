@@ -4,9 +4,9 @@ metadata:
   name: postgres-pv
 spec:
   capacity:
-    storage: "1Gi"
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /mnt/postgres-data  # Ensure this path is correct and does not change later
+    path: /mnt/postgres-data  # Corrected and applied properly
