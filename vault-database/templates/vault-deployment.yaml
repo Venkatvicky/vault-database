@@ -16,16 +16,14 @@ spec:
     spec:
       containers:
       - name: vault
-        image: "{{ .Values.vault.image }}"
-        args:
-          - "server"  # Ensures Vault runs in server mode
+        image: {{ .Values.vault.image }}
         ports:
         - containerPort: 8200
         volumeMounts:
         - name: vault-config
           mountPath: /vault/config
         - name: vault-storage
-          mountPath: /vault/data  # Vault data storage
+          mountPath: /vault/data  # Mount PV for storage
         env:
         - name: VAULT_LOCAL_CONFIG
           valueFrom:
@@ -38,4 +36,4 @@ spec:
           name: vault-config
       - name: vault-storage
         persistentVolumeClaim:
-          claimName: vault-pvc
+          claimName: vault-pvc  # Use PVC for Vault Storage
