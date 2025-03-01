@@ -22,6 +22,8 @@ spec:
         volumeMounts:
         - name: vault-config
           mountPath: /vault/config
+        - name: vault-storage
+          mountPath: /vault/data  # Vault stores data here
         env:
         - name: VAULT_LOCAL_CONFIG
           valueFrom:
@@ -32,3 +34,6 @@ spec:
       - name: vault-config
         configMap:
           name: vault-config
+      - name: vault-storage
+        persistentVolumeClaim:
+          claimName: vault-pvc
