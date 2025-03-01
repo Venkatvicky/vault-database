@@ -4,9 +4,12 @@ metadata:
   name: postgres-pv
 spec:
   capacity:
-    storage: {{ .Values.postgresql.storageSize }}
+    storage: "{{ .Values.postgresql.storageSize }}"
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
+  {{- if .Values.postgresql.storageClass }}
+  storageClassName: "{{ .Values.postgresql.storageClass }}"
+  {{- end }}
   hostPath:
-    path: /mnt/postgres-data  # Ensure this is the correct path
+    path: "/mnt/postgres-data"  # Ensure this path exists on the node
