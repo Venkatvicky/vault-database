@@ -4,9 +4,9 @@ metadata:
   name: vault-pv
 spec:
   capacity:
-    storage: 1Gi  # Restored the missing storage size
+    storage: 1Gi  # Set storage for Vault
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /mnt/vault-data  # Ensure you have the correct path
+    path: /mnt/vault-data  # Define a new path for Vault
