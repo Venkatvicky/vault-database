@@ -4,9 +4,9 @@ metadata:
   name: postgres-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: {{ .Values.postgresql.storageSize }}
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /mnt/postgres-data  # Corrected and applied properly
+    path: /mnt/postgres-data  # Ensure this is the correct path
