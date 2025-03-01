@@ -16,14 +16,16 @@ spec:
     spec:
       containers:
       - name: vault
-        image: {{ .Values.vault.image }}
+        image: "{{ .Values.vault.image }}"
+        args:
+          - "server"  # Ensures Vault runs in server mode
         ports:
         - containerPort: 8200
         volumeMounts:
         - name: vault-config
           mountPath: /vault/config
         - name: vault-storage
-          mountPath: /vault/data  # Vault stores data here
+          mountPath: /vault/data  # Vault data storage
         env:
         - name: VAULT_LOCAL_CONFIG
           valueFrom:
