@@ -2,11 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vault
-  namespace: vault
-  labels:
-    app: vault
 spec:
-  replicas: 1
+  replicas: {{ .Values.vault.replicas }}
   selector:
     matchLabels:
       app: vault
@@ -16,27 +13,22 @@ spec:
         app: vault
     spec:
       containers:
-        - name: vault
-          image: "{{ .Values.vault.image }}"
-          args:
-            - "server"  # ✅ Ensures Vault runs in server mode
-          ports:
-            - containerPort: 8200
-          volumeMounts:
-            - name: vault-config
-              mountPath: /vault/config
-            - name: vault-storage
-              mountPath: /vault/data
-          env:
-            - name: VAULT_LOCAL_CONFIG
-              valueFrom:
-                configMapKeyRef:
-                  name: vault-config
-                  key: config.json
-      volumes:
-        - name: vault-config
-          configMap:
-            name: vault-config
+      - name: vault
+        image: {{ .Values.vault.image }}
+        ports:
+        - containerPort: 8200
+        volumeMounts:
         - name: vault-storage
-          persistentVolumeClaim:
-            claimName: vault-pvc
+          mountPath: {{ .Values.vault.storagePath }}
+        env:
+        - name: VAULT_ADDR
+          value: "http://0.0.0.0:8200"
+        - name: VAULT_API_ADDR
+          value: "http://vault:8200"
+        - name: VAULT_DATABASE_URL
+          value: "postgresql://{{ .Values.postgres.username }}:{{ .Values.postgres.password }}@postgres:5432/{{ .Values.postgres.database }}"
+        command: ["vault", "server", "-config=/vault/config/vault-config.hcl"]
+      volumes:
+      - name: vault-storage
+        persistentVolumeClaim:
+          claimName: vault-pvc
