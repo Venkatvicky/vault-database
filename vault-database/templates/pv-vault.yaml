@@ -1,11 +1,11 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: vault-pvc
+  name: vault-pv-new
 spec:
+  capacity:
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  volumeName: vault-pv-new
+  hostPath:
+    path: /mnt/vault-data
