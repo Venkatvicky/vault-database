@@ -20,14 +20,6 @@ spec:
         volumeMounts:
         - name: vault-storage
           mountPath: {{ .Values.vault.storagePath }}
-        env:
-        - name: VAULT_ADDR
-          value: "http://0.0.0.0:8200"
-        - name: VAULT_API_ADDR
-          value: "http://vault:8200"
-        - name: VAULT_DATABASE_URL
-          value: "postgresql://{{ .Values.postgres.username }}:{{ .Values.postgres.password }}@postgres:5432/{{ .Values.postgres.database }}"
-        command: ["vault", "server", "-config=/vault/config/vault-config.hcl"]
       volumes:
       - name: vault-storage
         persistentVolumeClaim:
